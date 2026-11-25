@@ -1,0 +1,11 @@
+[
+  "ack",
+  "contract",
+  "disable",
+  "inspect",
+  "poll",
+  "publish",
+  "repair",
+  "subscriber",
+  "transform"
+]

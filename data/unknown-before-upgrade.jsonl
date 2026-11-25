@@ -1,0 +1,13 @@
+{"timestamp": 0, "type": "contract", "data": {"schema": "state1", "fields": {"temp": {"type": "int", "nullable": true, "semantics": "cooling_measured"}}}}
+{"timestamp": 0, "type": "contract", "data": {"schema": "state2", "fields": {"degrees": {"type": "int", "nullable": false, "semantics": "cooling_measured"}, "status": {"type": "enum", "nullable": false, "semantics": "cooling_outcome"}}}}
+{"timestamp": 1, "type": "transform", "data": {"id": "to1", "source": "state2", "target": "state1", "operation": {"copy_fields": {"temp": "degrees"}}, "requires": [], "loss": ["cooling_outcome"]}}
+{"timestamp": 2, "type": "subscriber", "data": {"id": "lab", "schemas": ["state1"], "must_keep": ["cooling_outcome"], "unknown_ok": []}}
+{"timestamp": 2, "type": "subscriber", "data": {"id": "old", "schemas": ["state1"], "must_keep": ["cooling_measured"], "unknown_ok": ["cooling_measured"]}}
+{"timestamp": 3, "type": "publish", "data": {"device": "m1", "seq": 1, "rev": 1, "schema": "state2", "body": {"degrees": 8, "status": "unknown"}}}
+{"timestamp": 4, "type": "poll", "data": {"id": "lab", "device": "m1"}}
+{"timestamp": 4, "type": "poll", "data": {"id": "old", "device": "m1"}}
+{"timestamp": 5, "type": "publish", "data": {"device": "m1", "seq": 2, "rev": 1, "schema": "state2", "body": {"degrees": 11, "status": "warm"}}}
+{"timestamp": 6, "type": "publish", "data": {"device": "m1", "seq": 1, "rev": 2, "schema": "state2", "body": {"degrees": 6, "status": "cool"}}}
+{"timestamp": 7, "type": "subscriber", "data": {"id": "lab", "schemas": ["state2", "state1"], "must_keep": ["cooling_outcome"], "unknown_ok": []}}
+{"timestamp": 8, "type": "poll", "data": {"id": "lab", "device": "m1"}}
+{"timestamp": 9, "type": "inspect", "data": {"device": "m1"}}

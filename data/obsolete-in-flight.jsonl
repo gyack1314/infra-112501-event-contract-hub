@@ -1,0 +1,12 @@
+{"timestamp": 0, "type": "contract", "data": {"schema": "state1", "fields": {"action": {"type": "enum", "nullable": false, "semantics": "phase"}}}}
+{"timestamp": 0, "type": "contract", "data": {"schema": "state2", "fields": {"phase": {"type": "enum", "nullable": false, "semantics": "phase"}}}}
+{"timestamp": 1, "type": "transform", "data": {"id": "rename-1", "source": "state2", "target": "state1", "operation": {"map_values": {"action": {"field": "phase", "map": {"loaded": "running", "finished": "done"}}}}, "requires": [], "loss": []}}
+{"timestamp": 2, "type": "subscriber", "data": {"id": "line", "schemas": ["state1"], "must_keep": ["phase"], "unknown_ok": []}}
+{"timestamp": 3, "type": "publish", "data": {"device": "m2", "seq": 1, "rev": 1, "schema": "state2", "body": {"phase": "loaded"}}}
+{"timestamp": 4, "type": "poll", "data": {"id": "line", "device": "m2"}}
+{"timestamp": 5, "type": "disable", "data": {"id": "rename-1"}}
+{"timestamp": 6, "type": "transform", "data": {"id": "rename-2", "source": "state2", "target": "state1", "operation": {"map_values": {"action": {"field": "phase", "map": {"loaded": "ready", "finished": "done"}}}}, "requires": [], "loss": []}}
+{"timestamp": 7, "type": "repair", "data": {"device": "m2", "seq": 1, "transform": "rename-1"}}
+{"timestamp": 8, "type": "poll", "data": {"id": "line", "device": "m2"}}
+{"timestamp": 9, "type": "ack", "data": {"id": "line", "device": "m2", "delivery": "delivery:1"}}
+{"timestamp": 10, "type": "poll", "data": {"id": "line", "device": "m2"}}
