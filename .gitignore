@@ -10,3 +10,5 @@ coverage/
 __pycache__/
 *.py[cod]
 .DS_Store
+.contract_hub_state.json
+.contract_hub_state.json.tmp-*
